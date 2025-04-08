@@ -11,8 +11,28 @@ $(document).ready(function () {
     });
   });
 
-  //hamburger menu toggle
-  $(".hamburger").click(function () {
-    $(".nav-links").toggleClass("active");
+  const $hamburger = $(".hamburger");
+  const $navLinks = $(".nav-links");
+
+  // Toggle menu on hamburger click
+  $hamburger.on("click", function (e) {
+    e.stopPropagation();
+    $navLinks.toggleClass("active");
+  });
+
+  // Close menu when a nav link is clicked
+  $(".nav-links a").on("click", function () {
+    $navLinks.removeClass("active");
+  });
+
+  // Close menu when clicking outside
+  $(document).on("click", function (e) {
+    if (
+      !$navLinks.is(e.target) &&
+      $navLinks.has(e.target).length === 0 &&
+      !$hamburger.is(e.target)
+    ) {
+      $navLinks.removeClass("active");
+    }
   });
 });
